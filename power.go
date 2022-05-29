@@ -36,8 +36,9 @@ func main() {
 	}
 	hsh := shf.Sum(nil)
 	bsf := base64.URLEncoding.EncodeToString(hsh)[:20]
-	nou := strings.Replace(bsf, "_", "", -1)
-	corr := "aA1!" + nou
+	nou := strings.Replace(bsf, "_", "a", -1)
+	nod := strings.Replace(nou, "-", "b", -1)
+	corr := "aA1!" + nod
 	sh := os.Getenv("SHELL")
 	pbc := fmt.Sprintf("echo -n \"%s\" | pbcopy", corr)
 	err = exec.Command(sh, "-c", pbc).Run()
