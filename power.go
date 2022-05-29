@@ -17,31 +17,36 @@ func main() {
 			fmt.Println(r)
 		}
 	}()
-	as := os.Args[1:]
-	if len(as) < 1 {
+	args := os.Args[1:]
+	if len(args) < 1 {
 		panic("not enough arguments")
 	}
-	slt, err := ioutil.ReadFile("/Users/kyle/.power")
+	homedir, err := os.UserHomeDir()
 	if err != nil {
 		panic(err)
 	}
-	uns := as[0]
-	sby := []byte(slt)
-	bun := []byte(uns)
-	bys := append(bun, sby...)
-	shf := sha512.New()
-	_, err = shf.Write(bys)
+	powerFile := fmt.Sprintf("%s/%s", homedir, ".power")
+	brine, err := ioutil.ReadFile(powerFile)
 	if err != nil {
 		panic(err)
 	}
-	hsh := shf.Sum(nil)
-	bsf := base64.URLEncoding.EncodeToString(hsh)[:20]
-	nou := strings.Replace(bsf, "_", "a", -1)
-	nod := strings.Replace(nou, "-", "b", -1)
-	corr := "aA1!" + nod
-	sh := os.Getenv("SHELL")
-	pbc := fmt.Sprintf("echo -n \"%s\" | pbcopy", corr)
-	err = exec.Command(sh, "-c", pbc).Run()
+	arg := args[0]
+	brineBytes := []byte(brine)
+	argBytes := []byte(arg)
+	argBrineBytes := append(argBytes, brineBytes...)
+	shah := sha512.New()
+	_, err = shah.Write(argBrineBytes)
+	if err != nil {
+		panic(err)
+	}
+	brown := shah.Sum(nil)
+	bbrown := base64.URLEncoding.EncodeToString(brown)[:20]
+	noUnder := strings.Replace(bbrown, "_", "a", -1)
+	noDashe := strings.Replace(noUnder, "-", "b", -1)
+	corr := "aA1!" + noDashe
+	bashe := os.Getenv("SHELL")
+	past := fmt.Sprintf("echo -n \"%s\" | pbcopy", corr)
+	err = exec.Command(bashe, "-c", past).Run()
 	if err != nil {
 		panic(err)
 	}
