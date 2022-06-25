@@ -21,6 +21,12 @@ func main() {
 	if len(args) < 1 {
 		panic("not enough arguments")
 	}
+	var print bool = false
+	if len(args) == 2 {
+		if args[1] == "-p" {
+			print = true
+		}
+	}
 	homedir, err := os.UserHomeDir()
 	if err != nil {
 		panic(err)
@@ -44,6 +50,10 @@ func main() {
 	noUnder := strings.Replace(bbrown, "_", "a", -1)
 	noDashe := strings.Replace(noUnder, "-", "b", -1)
 	corr := "aA1!" + noDashe
+	if print {
+		fmt.Print(corr)
+		os.Exit(0)
+	}
 	bashe := os.Getenv("SHELL")
 	past := fmt.Sprintf("echo -n \"%s\" | pbcopy", corr)
 	err = exec.Command(bashe, "-c", past).Run()
